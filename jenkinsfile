@@ -1,26 +1,14 @@
 pipeline {
     agent any
 
-    environment {
-        FLUTTER_HOME = "/opt/flutter"
-        PATH = "${FLUTTER_HOME}/bin:${env.PATH}"
-    }
-
     stages {
-
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Flutter Version') {
+        stage('Check Flutter') {
             steps {
                 sh 'flutter --version'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Get Dependencies') {
             steps {
                 sh 'flutter pub get'
             }
@@ -50,7 +38,6 @@ pipeline {
             archiveArtifacts artifacts: 'build/app/outputs/flutter-apk/app-release.apk',
                              fingerprint: true
         }
-
         always {
             echo 'Jenkins pipeline finished.'
         }
