@@ -2,13 +2,15 @@ pipeline {
     agent any
 
     environment {
-        PATH = "/var/lib/jenkins/flutter/bin:${env.PATH}"
+        ANDROID_HOME = '/opt/android-sdk'
+        PATH = "/var/lib/jenkins/flutter/bin:/opt/android-sdk/platform-tools:/opt/android-sdk/cmdline-tools/latest/bin:${env.PATH}"
     }
 
     stages {
-        stage('Check Flutter') {
+        stage('Check Flutter and Android SDK') {
             steps {
                 sh 'flutter --version'
+                sh 'flutter doctor --verbose'
             }
         }
 
