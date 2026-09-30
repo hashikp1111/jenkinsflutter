@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PATH+FLUTTER = '/var/lib/jenkins/flutter/bin'
+    }
+
     stages {
         stage('Check Flutter') {
             steps {
@@ -35,9 +39,12 @@ pipeline {
 
     post {
         success {
-            archiveArtifacts artifacts: 'build/app/outputs/flutter-apk/app-release.apk',
-                             fingerprint: true
+            archiveArtifacts(
+                artifacts: 'build/app/outputs/flutter-apk/app-release.apk',
+                fingerprint: true
+            )
         }
+
         always {
             echo 'Jenkins pipeline finished.'
         }
